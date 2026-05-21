@@ -29,8 +29,18 @@ echo ""
 echo "For permanent installation, run:"
 echo "  bash scripts/install-for-agents.sh"
 
-# Cleanup option
-read -p "Press Enter to cleanup temporary directory, or Ctrl+C to keep it: "
-cd /
-rm -rf "$TMP_DIR"
-echo "Temporary directory cleaned up"
+# Keep directory available for testing
+echo ""
+echo "✓ CLI is ready to use!"
+echo "Location: $TMP_DIR/boilerplate-cli-ui-python"
+echo ""
+echo "Quick usage:"
+echo "  cd $TMP_DIR/boilerplate-cli-ui-python"
+echo "  python3 -m src.main greet --name QuickTest"
+echo "  python3 -m src.main version"
+echo ""
+echo "For permanent installation, run:"
+echo "  bash scripts/install-for-agents.sh"
+echo ""
+echo "To cleanup temporary directory later:"
+echo "  rm -rf $TMP_DIR"
