@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Output schema for start command",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Output format version"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["foreground", "daemon"],
+          "description": "Server mode"
+        },
+        "port": {
+          "type": "integer",
+          "description": "HTTP server port"
+        },
+        "pid": {
+          "type": "integer",
+          "description": "Process ID (for daemon mode)"
+        },
+        "log_file": {
+          "type": "string",
+          "description": "Log file path (for daemon mode)"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC timestamp"
+        }
+      },
+      "required": ["mode", "port", "timestamp"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp of output"
+    }
+  },
+  "required": ["version", "data", "timestamp"]
+}

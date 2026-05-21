@@ -1,0 +1,23 @@
+# Core dependencies (minimal for agent-first CLI)
+# No external dependencies required for basic functionality
+# Python standard library is sufficient for:
+# - HTTP server (http.server)
+# - Argument parsing (argparse)
+# - Process management (subprocess, signal)
+# - JSON handling (json)
+# - File operations (os, pathlib)
+
+# Optional dependencies for enhanced functionality
+# Uncomment if needed for your specific use case
+
+# PyInstaller for binary compilation
+# pyinstaller>=6.0.0
+
+# Testing dependencies
+# pytest>=7.4.0
+# pytest-cov>=4.1.0
+
+# Development dependencies
+# black>=23.0.0
+# flake8>=6.0.0
+# mypy>=1.5.0

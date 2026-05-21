@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Output schema for greet command",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Output format version"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "greeting": {
+          "type": "string",
+          "description": "Greeting message"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name being greeted"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC timestamp"
+        }
+      },
+      "required": ["greeting", "name", "timestamp"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp of output"
+    }
+  },
+  "required": ["version", "data", "timestamp"]
+}

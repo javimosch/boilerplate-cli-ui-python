@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Output schema for status command",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Output format version"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["running", "not_running"],
+          "description": "Daemon status"
+        },
+        "pid": {
+          "type": "integer",
+          "description": "Process ID (if running)"
+        },
+        "log_file": {
+          "type": "string",
+          "description": "Log file path (if running)"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC timestamp"
+        }
+      },
+      "required": ["status", "timestamp"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp of output"
+    }
+  },
+  "required": ["version", "data", "timestamp"]
+}

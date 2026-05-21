@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: boilerplate-cli-ui-python
+    ports:
+      - "8080:8080"
+    environment:
+      - BOILERPLATE_PORT=8080
+      - BOILERPLATE_HOST=0.0.0.0
+      - BOILERPLATE_LOG_LEVEL=INFO
+      - BOILERPLATE_NO_INTERACTIVE=1
+      - NO_COLOR=1
+    volumes:
+      # Mount logs directory
+      - ./logs:/tmp
+      # Mount for custom configuration (optional)
+      - ./.env:/app/.env:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-m", "src.main", "status"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  # Development service with hot reload
+  dev:
+    build: .
+    container_name: boilerplate-cli-ui-python-dev
+    ports:
+      - "8080:8080"
+    environment:
+      - BOILERPLATE_PORT=8080
+      - BOILERPLATE_HOST=0.0.0.0
+      - BOILERPLATE_LOG_LEVEL=DEBUG
+      - BOILERPLATE_NO_INTERACTIVE=1
+      - NO_COLOR=1
+    volumes:
+      - ./src:/app/src
+      - ./schemas:/app/schemas
+      - ./logs:/tmp
+    command: python -m src.main start --port 8080
+    profiles:
+      - dev
