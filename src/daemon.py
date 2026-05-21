@@ -12,6 +12,7 @@ import os
 import sys
 import signal
 import subprocess
+import time
 from typing import Optional
 from datetime import datetime
 
@@ -114,6 +115,21 @@ class DaemonManager:
         pid = self._read_pid()
         try:
             os.kill(pid, signal.SIGTERM)
+            
+            # Wait for process to terminate (max 5 seconds)
+            for _ in range(50):  # 50 * 0.1s = 5 seconds
+                try:
+                    os.kill(pid, 0)  # Check if process exists
+                    time.sleep(0.1)
+                except ProcessLookupError:
+                    # Process has terminated
+                    break
+            else:
+                # Process didn't terminate gracefully, force kill
+                os.kill(pid, signal.SIGKILL)
+                time.sleep(0.1)
+            
+            # Clean up PID file
             os.remove(self.pid_file)
             return {
                 "status": "stopped",
@@ -122,7 +138,10 @@ class DaemonManager:
             }
         except ProcessLookupError:
             # Process not running, clean up PID file
-            os.remove(self.pid_file)
+            try:
+                os.remove(self.pid_file)
+            except FileNotFoundError:
+                pass
             raise ResourceNotFoundError("daemon", f"PID {pid}")
         except Exception as e:
             raise InternalError(f"Failed to stop daemon: {str(e)}")
