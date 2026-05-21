@@ -359,6 +359,7 @@ This codebase includes extensive documentation for agents:
 
 ### Core Documentation
 - **[AGENTS.md](AGENTS.md)** - Complete development guide with backend/frontend guidelines
+- **[docs/AGENTS_FRIENDLY_TOOLS.md](docs/AGENTS_FRIENDLY_TOOLS.md)** - Agent-first CLI design principles and patterns
 - **[python-cli-boilerplate-development.md](.agents/skills/python-cli-boilerplate-development.md)** - Backend development patterns and pitfalls
 - **[react-cdn-modular-ui.md](.agents/skills/react-cdn-modular-ui.md)** - Frontend development patterns and pitfalls
 
@@ -569,7 +570,6 @@ When extending this boilerplate:
 ## 📖 Additional References
 
 ### Design Philosophy
-- **[AGENTS_FRIENDLY_TOOLS.md](https://github.com/javimosch/supercli-cli-boilerplates)** - Agent-first CLI design principles
 - **[minimalist-ui skill](.claude/skills/minimalist-ui/)** - Premium minimalist design guidelines
 - **[redesign-existing-projects skill](.claude/skills/redesign-existing-projects/)** - Design upgrade principles
 
@@ -581,7 +581,6 @@ When extending this boilerplate:
 
 ### Project Integration
 - **[SuperCLI](https://github.com/javimosch/supercli)** - Universal CLI framework
-- **[SuperCLI Clis](https://github.com/javimosch/supercli-clis)** - CLI plugin ecosystem
 
 ## 📄 License
 
