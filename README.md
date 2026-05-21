@@ -351,6 +351,7 @@ This boilerplate follows these core principles:
 - **[AGENTS.md](AGENTS.md)**: Development guide for AI agents
 - **[.agents/skills/boilerplate-python-usage.md](.agents/skills/boilerplate-python-usage.md)**: Usage guide for agents
 - **[.agents/skills/boilerplate-python-dev.md](.agents/skills/boilerplate-python-dev.md)**: Development guide for agents
+- **[.agents/skills/boilerplate-python-smoke-tests.md](.agents/skills/boilerplate-python-smoke-tests.md)**: Comprehensive smoke testing guide
 
 ## Use Cases
 
