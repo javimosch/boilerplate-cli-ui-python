@@ -79,6 +79,8 @@ class APIHandler(BaseHTTPRequestHandler):
         try:
             if self.path == '/':
                 self._handle_root()
+            elif self.path == '/ui' or self.path == '/ui/':
+                self._handle_ui()
             elif self.path == '/api/status':
                 self._handle_status()
             elif self.path == '/api/health':
@@ -96,6 +98,7 @@ class APIHandler(BaseHTTPRequestHandler):
             "description": "Agent-first CLI with HTTP API",
             "endpoints": {
                 "/": "API information",
+                "/ui": "Web UI interface",
                 "/api/status": "Server status",
                 "/api/health": "Health check"
             },
@@ -113,6 +116,26 @@ class APIHandler(BaseHTTPRequestHandler):
     def _handle_health(self) -> None:
         """Handle health check endpoint."""
         self._send_json_response({"status": "healthy", "timestamp": get_timestamp()})
+    
+    def _handle_ui(self) -> None:
+        """Handle UI endpoint - serve HTML interface."""
+        try:
+            # Get the project directory
+            import os
+            project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            ui_path = os.path.join(project_dir, "templates", "index.html")
+            
+            with open(ui_path, 'r') as f:
+                html_content = f.read()
+            
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html')
+            self.end_headers()
+            self.wfile.write(html_content.encode('utf-8'))
+        except FileNotFoundError:
+            self._send_error_response("UI not found", 404)
+        except Exception as e:
+            self._send_error_response(f"Error serving UI: {str(e)}", 500)
 
 
 class HTTPServerManager:
