@@ -2,6 +2,8 @@
 
 **Agent-first Python CLI boilerplate with HTTP API and daemon support.**
 
+**Author:** Javier Leandro Arancibia
+
 A modern Python CLI template following agent-first design principles from [AGENTS_FRIENDLY_TOOLS.md](https://github.com/javimosch/supercli-cli-boilerplates). Designed for crafting CLI applications that are optimized for AI agent consumption while remaining human-friendly.
 
 ## Philosophy

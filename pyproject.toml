@@ -21,9 +21,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/javimosch/supercli-cli-boilerplates"
-Repository = "https://github.com/javimosch/supercli-cli-boilerplates"
-Documentation = "https://github.com/javimosch/supercli-cli-boilerplates/tree/main/boilerplate-cli-ui-python"
+Homepage = "https://github.com/javimosch/boilerplate-cli-ui-python"
+Repository = "https://github.com/javimosch/boilerplate-cli-ui-python"
+Documentation = "https://github.com/javimosch/boilerplate-cli-ui-python"
 
 [project.scripts]
 boilerplate-cli-ui-python = "src.main:main"
