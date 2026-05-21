@@ -58,7 +58,8 @@ class APIHandler(BaseHTTPRequestHandler):
         self.send_response(status_code)
         self.send_header('Content-Type', 'application/json')
         self.end_headers()
-        json.dump(data, self.wfile)
+        json_bytes = json.dumps(data).encode('utf-8')
+        self.wfile.write(json_bytes)
     
     def _send_error_response(self, message: str, status_code: int = 500) -> None:
         """Send error response."""

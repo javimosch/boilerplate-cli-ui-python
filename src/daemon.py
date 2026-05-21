@@ -68,11 +68,14 @@ class DaemonManager:
             # Get current executable path
             exec_path = sys.executable
             
-            # Get current script path
-            script_path = os.path.abspath(sys.argv[0])
+            # Get project directory (parent of src directory)
+            project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             
-            # Create command to run server in foreground
-            cmd = [exec_path, script_path, "start", f"--port={port}"]
+            # Path to run.py script
+            run_script = os.path.join(project_dir, "run.py")
+            
+            # Create command to run server in foreground using run.py
+            cmd = [exec_path, run_script, "start", f"--port={port}"]
             
             # Set up logging
             log_file_handle = open(self.log_file, 'a')
@@ -82,7 +85,8 @@ class DaemonManager:
                 cmd,
                 stdout=log_file_handle,
                 stderr=log_file_handle,
-                stdin=subprocess.DEVNULL
+                stdin=subprocess.DEVNULL,
+                cwd=project_dir
             )
             
             # Write PID file
