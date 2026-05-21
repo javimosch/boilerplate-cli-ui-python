@@ -20,25 +20,29 @@ function App() {
     
     return (
         <HashRouter>
-            <div className="min-h-screen bg-[#F7F6F3]">
+            <div className="min-h-screen bg-[#F7F6F3] flex flex-col">
                 {/* Mobile Header */}
-                <MobileHeader onMenuClick={() => setSidebarOpen(true)} />
+                <div className="lg:hidden">
+                    <MobileHeader onMenuClick={() => setSidebarOpen(true)} />
+                </div>
                 
-                {/* Sidebar */}
-                <Sidebar 
-                    isOpen={sidebarOpen} 
-                    onClose={() => setSidebarOpen(false)} 
-                />
-                
-                {/* Main Content */}
-                <main className="lg:ml-64 pt-16 lg:pt-0 min-h-screen">
-                    <Routes>
-                        <Route path="/" element={<Dashboard />} />
-                        <Route path="/api-test" element={<APITestView />} />
-                        <Route path="/settings" element={<SettingsView />} />
-                        <Route path="*" element={<Navigate to="/" replace />} />
-                    </Routes>
-                </main>
+                <div className="flex flex-1 overflow-hidden">
+                    {/* Sidebar */}
+                    <Sidebar 
+                        isOpen={sidebarOpen} 
+                        onClose={() => setSidebarOpen(false)} 
+                    />
+                    
+                    {/* Main Content */}
+                    <main className="flex-1 overflow-auto pt-16 lg:pt-0">
+                        <Routes>
+                            <Route path="/" element={<Dashboard />} />
+                            <Route path="/api-test" element={<APITestView />} />
+                            <Route path="/settings" element={<SettingsView />} />
+                            <Route path="*" element={<Navigate to="/" replace />} />
+                        </Routes>
+                    </main>
+                </div>
             </div>
         </HashRouter>
     );

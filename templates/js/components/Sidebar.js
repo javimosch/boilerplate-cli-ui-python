@@ -28,9 +28,10 @@ function Sidebar({ isOpen, onClose }) {
             
             {/* Sidebar */}
             <aside className={`
-                fixed lg:static inset-y-0 left-0 z-50
-                w-64 bg-white border-r border-[#EAEAEA]
-                transform transition-transform duration-300 ease-in-out
+                fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto
+                w-64 h-full bg-white border-r border-[#EAEAEA]
+                transform transition-transform duration-300 ease-in-out flex-shrink-0
+                flex flex-col
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `}>
                 {/* Logo */}
@@ -72,7 +73,7 @@ function Sidebar({ isOpen, onClose }) {
                 </nav>
                 
                 {/* Status indicator */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#EAEAEA]">
+                <div className="mt-auto p-4 border-t border-[#EAEAEA]">
                     <div className="flex items-center gap-3 px-4 py-3 bg-[#EDF3EC] rounded-lg">
                         <div className="w-2 h-2 bg-[#346538] rounded-full animate-pulse"></div>
                         <span className="text-sm text-[#346538] font-medium">Daemon Active</span>
