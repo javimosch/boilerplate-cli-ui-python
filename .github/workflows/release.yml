@@ -22,8 +22,9 @@ jobs:
       - name: Build Linux (amd64)
         run: |
           chmod +x build.sh
-          ./build.sh
-          mv boilerplate-cli-ui-python boilerplate-cli-ui-python-linux-amd64
+          python -m PyInstaller --onefile --name boilerplate-cli-ui-python --add-data "schemas:schemas" --hidden-import=src --strip src/main.py
+          chmod +x dist/boilerplate-cli-ui-python
+          mv dist/boilerplate-cli-ui-python boilerplate-cli-ui-python-linux-amd64
 
       - name: Create checksums
         run: sha256sum boilerplate-cli-ui-linux-amd64 > checksums.txt
