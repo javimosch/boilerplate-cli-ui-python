@@ -38,20 +38,30 @@ def parse_args() -> argparse.Namespace:
     # Greet command
     greet_parser = subparsers.add_parser('greet', add_help=False)
     greet_parser.add_argument('--name', type=str, help='Name to greet')
+    greet_parser.add_argument('--human', action='store_true', help='Human-readable output')
+    greet_parser.add_argument('--schema', action='store_true', help='JSON schema discovery')
     
     # Version command
     version_parser = subparsers.add_parser('version', add_help=False)
+    version_parser.add_argument('--human', action='store_true', help='Human-readable output')
+    version_parser.add_argument('--schema', action='store_true', help='JSON schema discovery')
     
     # Start command
     start_parser = subparsers.add_parser('start', add_help=False)
     start_parser.add_argument('--port', type=int, help='HTTP port')
     start_parser.add_argument('--daemon', action='store_true', help='Run as daemon')
+    start_parser.add_argument('--human', action='store_true', help='Human-readable output')
+    start_parser.add_argument('--schema', action='store_true', help='JSON schema discovery')
     
     # Stop command
     stop_parser = subparsers.add_parser('stop', add_help=False)
+    stop_parser.add_argument('--human', action='store_true', help='Human-readable output')
+    stop_parser.add_argument('--schema', action='store_true', help='JSON schema discovery')
     
     # Status command
     status_parser = subparsers.add_parser('status', add_help=False)
+    status_parser.add_argument('--human', action='store_true', help='Human-readable output')
+    status_parser.add_argument('--schema', action='store_true', help='JSON schema discovery')
     
     return parser.parse_args()
 
@@ -67,9 +77,12 @@ def main() -> None:
     # Initialize config
     config = Config()
     
+    # Check for human mode (from global or subcommand flags)
+    human_mode = getattr(args, 'human', False)
+    
     # Initialize output formatter (JSON by default)
     formatter = OutputFormatter(
-        human_mode=args.human,
+        human_mode=human_mode,
         no_color=config.no_color
     )
     
@@ -80,7 +93,8 @@ def main() -> None:
         return
     
     # Handle schema discovery
-    if args.schema:
+    schema_mode = getattr(args, 'schema', False)
+    if schema_mode:
         if args.command:
             schema_path = f"schemas/{args.command}.schema.json"
             try:
