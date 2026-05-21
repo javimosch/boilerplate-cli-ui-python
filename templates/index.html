@@ -1,268 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boilerplate CLI UI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- React -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    
+    <!-- React Router -->
+    <script src="https://unpkg.com/history@5/umd/history.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js" crossorigin></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+        
+        :root {
+            --canvas: #F7F6F3;
+            --surface: #FFFFFF;
+            --border: #EAEAEA;
+            --text-primary: #111111;
+            --text-secondary: #787774;
+            --accent-red: #FDEBEC;
+            --accent-red-text: #9F2F2D;
+            --accent-blue: #E1F3FE;
+            --accent-blue-text: #1F6C9F;
+            --accent-green: #EDF3EC;
+            --accent-green-text: #346538;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--canvas);
+            color: var(--text-primary);
+            line-height: 1.6;
         }
         
-        .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
-            width: 100%;
-            overflow: hidden;
+        .mono {
+            font-family: 'Geist Mono', monospace;
         }
         
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
+        .scroll-entry {
+            animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(12px);
         }
         
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .header p {
-            opacity: 0.9;
-            font-size: 14px;
+        .card-hover {
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
         }
         
-        .content {
-            padding: 30px;
+        .card-hover:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transform: translateY(-1px);
         }
         
-        .status-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+        .btn-active {
+            transform: scale(0.98);
         }
         
-        .status-card h2 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #333;
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
         
-        .status-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #e9ecef;
+        ::-webkit-scrollbar-track {
+            background: var(--canvas);
         }
         
-        .status-item:last-child {
-            border-bottom: none;
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
         }
         
-        .status-label {
-            color: #666;
-            font-weight: 500;
-        }
-        
-        .status-value {
-            color: #333;
-            font-weight: 600;
-        }
-        
-        .status-healthy {
-            color: #28a745;
-        }
-        
-        .status-running {
-            color: #007bff;
-        }
-        
-        .actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .action-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        
-        .action-btn:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-        }
-        
-        .action-btn:active {
-            transform: translateY(0);
-        }
-        
-        .response-area {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .response-area h3 {
-            color: #4ec9b0;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🚀 Boilerplate CLI UI</h1>
-            <p>Agent-First Python CLI with HTTP API</p>
-        </div>
-        
-        <div class="content">
-            <div class="status-card">
-                <h2>📊 Server Status</h2>
-                <div class="status-item">
-                    <span class="status-label">Status</span>
-                    <span class="status-value status-running" id="status-status">Loading...</span>
-                </div>
-                <div class="status-item">
-                    <span class="status-label">Port</span>
-                    <span class="status-value" id="status-port">-</span>
-                </div>
-                <div class="status-item">
-                    <span class="status-label">Uptime</span>
-                    <span class="status-value" id="status-uptime">-</span>
-                </div>
-                <div class="status-item">
-                    <span class="status-label">Health</span>
-                    <span class="status-value status-healthy" id="status-health">Loading...</span>
-                </div>
-            </div>
-            
-            <div class="actions">
-                <button class="action-btn" onclick="refreshStatus()">🔄 Refresh Status</button>
-                <button class="action-btn" onclick="testHealth()">💊 Health Check</button>
-                <button class="action-btn" onclick="testAPI()">🔌 Test API</button>
-            </div>
-            
-            <div class="response-area">
-                <h3>Response:</h3>
-                <div id="response">Click a button to see the response...</div>
-            </div>
-        </div>
-    </div>
+    <div id="root"></div>
     
-    <script>
-        const API_BASE = window.location.origin;
-        
-        async function refreshStatus() {
-            try {
-                document.getElementById('response').innerHTML = '<div class="loading"></div> Loading status...';
-                
-                const response = await fetch(`${API_BASE}/api/status`);
-                const data = await response.json();
-                
-                document.getElementById('status-status').textContent = data.status;
-                document.getElementById('status-port').textContent = data.port;
-                document.getElementById('status-uptime').textContent = `${data.uptime_seconds.toFixed(2)}s`;
-                document.getElementById('status-health').textContent = 'Loading...';
-                
-                document.getElementById('response').innerHTML = JSON.stringify(data, null, 2);
-                
-                // Also check health
-                testHealthSilent();
-            } catch (error) {
-                document.getElementById('response').innerHTML = `Error: ${error.message}`;
-            }
-        }
-        
-        async function testHealth() {
-            try {
-                document.getElementById('response').innerHTML = '<div class="loading"></div> Checking health...';
-                
-                const response = await fetch(`${API_BASE}/api/health`);
-                const data = await response.json();
-                
-                document.getElementById('status-health').textContent = data.status;
-                document.getElementById('response').innerHTML = JSON.stringify(data, null, 2);
-            } catch (error) {
-                document.getElementById('response').innerHTML = `Error: ${error.message}`;
-                document.getElementById('status-health').textContent = 'Error';
-            }
-        }
-        
-        async function testHealthSilent() {
-            try {
-                const response = await fetch(`${API_BASE}/api/health`);
-                const data = await response.json();
-                document.getElementById('status-health').textContent = data.status;
-            } catch (error) {
-                document.getElementById('status-health').textContent = 'Error';
-            }
-        }
-        
-        async function testAPI() {
-            try {
-                document.getElementById('response').innerHTML = '<div class="loading"></div> Testing API...';
-                
-                const response = await fetch(`${API_BASE}/`);
-                const data = await response.json();
-                
-                document.getElementById('response').innerHTML = JSON.stringify(data, null, 2);
-            } catch (error) {
-                document.getElementById('response').innerHTML = `Error: ${error.message}`;
-            }
-        }
-        
-        // Auto-refresh status every 5 seconds
-        setInterval(refreshStatus, 5000);
-        
-        // Initial load
-        refreshStatus();
-    </script>
+    <!-- Main App -->
+    <script type="text/babel" src="js/app.js"></script>
+    
+    <!-- Services -->
+    <script type="text/babel" src="js/services/apiService.js"></script>
+    
+    <!-- Composables -->
+    <script type="text/babel" src="js/composables/useDaemonStatus.js"></script>
+    
+    <!-- Components -->
+    <script type="text/babel" src="js/components/Sidebar.js"></script>
+    <script type="text/babel" src="js/components/StatusCard.js"></script>
+    <script type="text/babel" src="js/components/ResponseViewer.js"></script>
+    <script type="text/babel" src="js/components/APITester.js"></script>
+    <script type="text/babel" src="js/components/MobileHeader.js"></script>
+    
+    <!-- Views -->
+    <script type="text/babel" src="js/views/Dashboard.js"></script>
+    <script type="text/babel" src="js/views/APITestView.js"></script>
+    <script type="text/babel" src="js/views/SettingsView.js"></script>
 </body>
 </html>

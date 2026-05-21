@@ -81,6 +81,8 @@ class APIHandler(BaseHTTPRequestHandler):
                 self._handle_root()
             elif self.path == '/ui' or self.path == '/ui/':
                 self._handle_ui()
+            elif self.path.startswith('/js/'):
+                self._handle_static_file(self.path, 'application/javascript')
             elif self.path == '/api/status':
                 self._handle_status()
             elif self.path == '/api/health':
@@ -130,12 +132,33 @@ class APIHandler(BaseHTTPRequestHandler):
             
             self.send_response(200)
             self.send_header('Content-Type', 'text/html')
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
             self.end_headers()
             self.wfile.write(html_content.encode('utf-8'))
         except FileNotFoundError:
             self._send_error_response("UI not found", 404)
         except Exception as e:
             self._send_error_response(f"Error serving UI: {str(e)}", 500)
+    
+    def _handle_static_file(self, path: str, content_type: str) -> None:
+        """Handle static file serving."""
+        try:
+            import os
+            project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            file_path = os.path.join(project_dir, "templates", path.lstrip('/'))
+            
+            with open(file_path, 'r') as f:
+                file_content = f.read()
+            
+            self.send_response(200)
+            self.send_header('Content-Type', content_type)
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.end_headers()
+            self.wfile.write(file_content.encode('utf-8'))
+        except FileNotFoundError:
+            self._send_error_response("File not found", 404)
+        except Exception as e:
+            self._send_error_response(f"Error serving file: {str(e)}", 500)
 
 
 class HTTPServerManager:
