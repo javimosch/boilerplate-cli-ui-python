@@ -30,6 +30,18 @@ This boilerplate embodies the principle that modern CLIs should be designed for 
 
 ## Installation
 
+### Agent Installation Scripts
+
+**Quick Install (Test CLI immediately):**
+```bash
+curl -sSL https://raw.githubusercontent.com/javimosch/boilerplate-cli-ui-python/main/scripts/quick-install.sh | bash
+```
+
+**Permanent Installation (for agents):**
+```bash
+curl -sSL https://raw.githubusercontent.com/javimosch/boilerplate-cli-ui-python/main/scripts/install-for-agents.sh | bash
+```
+
 ### Binary Installation (Recommended for Production)
 
 Install the pre-compiled binary directly from GitHub releases:

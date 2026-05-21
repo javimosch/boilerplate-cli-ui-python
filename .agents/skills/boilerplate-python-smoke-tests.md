@@ -2,6 +2,24 @@
 
 This skill provides comprehensive smoke testing procedures for the boilerplate-cli-ui-python template. Use this to validate that your implementation works correctly after making changes.
 
+## Quick Agent Installation
+
+Before running smoke tests, install the CLI using agent scripts:
+
+```bash
+# Quick install (test immediately)
+curl -sSL https://raw.githubusercontent.com/javimosch/boilerplate-cli-ui-python/main/scripts/quick-install.sh | bash
+
+# Permanent installation (for agents)
+curl -sSL https://raw.githubusercontent.com/javimosch/boilerplate-cli-ui-python/main/scripts/install-for-agents.sh | bash
+```
+
+## Template Location
+
+**Full Path**: `/home/jarancibia/ai/supercli-clis/boilerplate-cli-ui-python`
+
+**GitHub Repository**: https://github.com/javimosch/boilerplate-cli-ui-python
+
 ## Quick Smoke Test
 
 ```bash
