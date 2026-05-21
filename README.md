@@ -28,6 +28,51 @@ This boilerplate embodies the principle that modern CLIs should be designed for 
 - **Docker support**: Container-ready with compose files
 - **Zero dependencies**: Uses only Python standard library
 
+## Installation
+
+### Binary Installation (Recommended for Production)
+
+Install the pre-compiled binary directly from GitHub releases:
+
+```bash
+# Install latest version
+curl -sSL https://raw.githubusercontent.com/javimosch/boilerplate-cli-ui-python/main/install.sh | bash
+
+# Install specific version
+curl -sSL https://raw.githubusercontent.com/javimosch/boilerplate-cli-ui-python/main/install.sh | bash -s v1.0.0
+```
+
+This will install the binary to `/usr/local/bin/boilerplate-cli-ui-python`.
+
+### Manual Binary Download
+
+Download directly from GitHub releases:
+
+```bash
+# Linux amd64
+wget https://github.com/javimosch/boilerplate-cli-ui-python/releases/latest/download/boilerplate-cli-ui-python-linux-amd64
+chmod +x boilerplate-cli-ui-python-linux-amd64
+sudo mv boilerplate-cli-ui-python-linux-amd64 /usr/local/bin/boilerplate-cli-ui-python
+```
+
+### Development Installation
+
+```bash
+# Clone repository
+git clone https://github.com/javimosch/boilerplate-cli-ui-python.git
+cd boilerplate-cli-ui-python
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies (if any)
+pip install -r requirements.txt
+
+# Run CLI
+python -m src.main greet --name Alice
+```
+
 ## Quick Start
 
 ### Local Development
