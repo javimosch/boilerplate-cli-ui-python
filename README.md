@@ -18,6 +18,12 @@ This codebase serves as a **complete reference** for building modular applicatio
 
 **Core Philosophy**: Design for programmatic consumption first, human interaction second. Every architectural decision prioritizes agent reliability and predictability.
 
+## ⚠️ Important Notice
+
+**This is an opinionated boilerplate** designed specifically for building agentic-ready applications in 2026. The architectural decisions, patterns, and conventions reflect specific choices about how AI agents should interact with software systems.
+
+**No contributions are accepted.** This boilerplate is maintained as a reference implementation and will not accept pull requests, feature requests, or external modifications. It is provided as-is for educational and reference purposes.
+
 ## 🏗️ 2026 Agentic Standards Implementation
 
 ### Modular Architecture Principles
@@ -556,17 +562,6 @@ This boilerplate is ideal for:
 - **No sensitive data in URLs**: Hashbang routing doesn't expose data
 - **Input sanitization**: All user inputs validated
 
-## 🤝 Contributing Guidelines
-
-When extending this boilerplate:
-
-1. **Maintain LOC limits** - Split files exceeding limits
-2. **Follow agent-first principles** - JSON-by-default, semantic errors
-3. **Add comprehensive documentation** - Update AGENTS.md and skills
-4. **Test thoroughly** - Backend and frontend verification
-5. **Use existing patterns** - Don't reinvent established solutions
-6. **Document new patterns** - Add to skills for other agents
-
 ## 📖 Additional References
 
 ### Design Philosophy
@@ -584,7 +579,7 @@ When extending this boilerplate:
 
 ## 📄 License
 
-MIT License - Feel free to use this boilerplate for your projects, following the contributing guidelines.
+MIT License - Feel free to use this boilerplate as a reference for your projects. This is provided as-is with no contributions accepted.
 
 ## 🙏 Acknowledgments
 
