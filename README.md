@@ -2,6 +2,10 @@
 
 **Agent-First Python CLI Boilerplate with Modular React UI for 2026 Agentic Standards**
 
+Part of [SuperCLI](https://github.com/javimosch/supercli) - build CLI/UI plugins fast for 2026.
+
+**Go versions**: [boilerplate-cli-ui-go](https://github.com/javimosch/boilerplate-cli-ui-go) (v1) | [boilerplate-cli-ui-go-v2-vue](https://github.com/javimosch/boilerplate-cli-ui-go-v2-vue) (Vue 3) | [boilerplate-cli-ui-go-v2-react](https://github.com/javimosch/boilerplate-cli-ui-go-v2-react) (React 18) | **Node**: [boilerplate-cli-ui-node](https://github.com/javimosch/boilerplate-cli-ui-node)
+
 **Author:** Javier Leandro Arancibia, Senior Engineer
 
 A comprehensive reference implementation for crafting modular, agent-first CLI applications with modern React UIs. This boilerplate embodies 2026 agentic development standards, providing production-ready patterns for backend services, frontend interfaces, and the integration patterns that AI agents need to work reliably with software systems.
