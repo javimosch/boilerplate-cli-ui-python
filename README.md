@@ -4,7 +4,7 @@
 
 Part of [SuperCLI](https://github.com/javimosch/supercli) - build CLI/UI plugins fast for 2026.
 
-**Go versions**: [boilerplate-cli-ui-go](https://github.com/javimosch/boilerplate-cli-ui-go) (v1) | [boilerplate-cli-ui-go-v2-vue](https://github.com/javimosch/boilerplate-cli-ui-go-v2-vue) (Vue 3) | [boilerplate-cli-ui-go-v2-react](https://github.com/javimosch/boilerplate-cli-ui-go-v2-react) (React 18) | **Node**: [boilerplate-cli-ui-node](https://github.com/javimosch/boilerplate-cli-ui-node)
+**Go versions**: [boilerplate-cli-ui-go](https://github.com/javimosch/boilerplate-cli-ui-go) (v1) | [boilerplate-cli-ui-go-v2-vue](https://github.com/javimosch/boilerplate-cli-ui-go-v2-vue) (Vue 3) | [boilerplate-cli-ui-go-v2-react](https://github.com/javimosch/boilerplate-cli-ui-go-v2-react) (React 18) | **Node**: [boilerplate-cli-ui-node](https://github.com/javimosch/boilerplate-cli-ui-node) | **Rust**: [boilerplate-cli-ui-rust](https://github.com/javimosch/boilerplate-cli-ui-rust)
 
 **Author:** Javier Leandro Arancibia, Senior Engineer
 
