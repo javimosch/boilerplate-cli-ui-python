@@ -8,6 +8,7 @@ Following AGENTS_FRIENDLY_TOOLS.md principles:
 - Structured error output
 """
 
+import sys
 import argparse
 from typing import Optional
 
@@ -127,9 +128,11 @@ class CLIHandler:
                 from .errors import CLIError
                 if isinstance(e, CLIError):
                     self.formatter.output_error(e.to_dict(), e.code)
+                    sys.exit(e.code)
                 else:
                     error = InternalError(str(e))
                     self.formatter.output_error(error.to_dict(), error.code)
+                    sys.exit(error.code)
         else:
             # Run in foreground - will be handled by main
             result = {
@@ -148,9 +151,11 @@ class CLIHandler:
             from .errors import CLIError
             if isinstance(e, CLIError):
                 self.formatter.output_error(e.to_dict(), e.code)
+                sys.exit(e.code)
             else:
                 error = InternalError(str(e))
                 self.formatter.output_error(error.to_dict(), error.code)
+                sys.exit(error.code)
     
     def handle_status(self, args: argparse.Namespace, daemon_manager) -> None:
         """Handle status command."""
@@ -161,6 +166,8 @@ class CLIHandler:
             from .errors import CLIError
             if isinstance(e, CLIError):
                 self.formatter.output_error(e.to_dict(), e.code)
+                sys.exit(e.code)
             else:
                 error = InternalError(str(e))
                 self.formatter.output_error(error.to_dict(), error.code)
+                sys.exit(error.code)

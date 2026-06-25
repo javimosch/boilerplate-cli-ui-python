@@ -58,8 +58,11 @@ class Config:
         return os.environ.get('BOILERPLATE_LOG_FILE', self.DEFAULT_LOG_FILE)
     
     def _get_no_color(self) -> bool:
-        """Check NO_COLOR environment variable."""
-        return os.environ.get('NO_COLOR', '').lower() in ('1', 'true', 'yes')
+        """Check NO_COLOR environment variable. Defaults to True (no color)."""
+        env_val = os.environ.get('NO_COLOR')
+        if env_val is None:
+            return True
+        return env_val.lower() not in ('0', 'false', 'no')
     
     def _get_no_interactive(self) -> bool:
         """Check non-interactive mode."""
