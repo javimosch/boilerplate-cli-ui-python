@@ -106,10 +106,12 @@ def main() -> None:
                 from .errors import ResourceNotFoundError
                 error = ResourceNotFoundError("schema", args.command)
                 formatter.output_error(error.to_dict(), error.code)
+                sys.exit(error.code)
         else:
             from .errors import InvalidArgumentError
             error = InvalidArgumentError("Schema requires a command")
             formatter.output_error(error.to_dict(), error.code)
+            sys.exit(error.code)
         return
     
     # Handle no command
@@ -120,7 +122,7 @@ def main() -> None:
             details={"available_commands": ["greet", "version", "start", "stop", "status"]}
         )
         formatter.output_error(error.to_dict(), error.code)
-        return
+        sys.exit(error.code)
     
     # Initialize daemon manager
     daemon_manager = DaemonManager(config)
@@ -156,15 +158,18 @@ def main() -> None:
                 details={"available_commands": ["greet", "version", "start", "stop", "status"]}
             )
             formatter.output_error(error.to_dict(), error.code)
-    
+            sys.exit(error.code)
+
     except CLIError as e:
         formatter.output_error(e.to_dict(), e.code)
+        sys.exit(e.code)
     except KeyboardInterrupt:
         formatter.log("Interrupted by user")
         sys.exit(130)  # Standard exit code for SIGINT
     except Exception as e:
         error = InternalError(f"Unexpected error: {str(e)}")
         formatter.output_error(error.to_dict(), error.code)
+        sys.exit(error.code)
 
 
 if __name__ == '__main__':

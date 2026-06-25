@@ -53,8 +53,6 @@ class OutputFormatter:
             self._output_human(data)
         else:
             self._output_json(data)
-        
-        sys.exit(exit_code)
     
     def _output_json(self, data: Any) -> None:
         """Output data as JSON to stdout."""
@@ -94,8 +92,6 @@ class OutputFormatter:
             self._output_error_human(error_dict)
         else:
             self._output_error_json(error_dict)
-        
-        sys.exit(exit_code)
     
     def _output_error_json(self, error_dict: Dict[str, Any]) -> None:
         """Output error as JSON to stderr."""
