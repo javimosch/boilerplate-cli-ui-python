@@ -72,6 +72,7 @@ class CLIError(Exception):
     def to_dict(self) -> Dict[str, Any]:
         """Convert error to structured dictionary for JSON output."""
         return {
+            "ok": False,
             "error": {
                 "code": self.code,
                 "type": self.error_type,

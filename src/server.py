@@ -9,16 +9,19 @@ Following AGENTS_FRIENDLY_TOOLS.md principles:
 """
 
 import json
+import os
 import sys
 import signal
 import logging
+import time
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from typing import Any, Dict
 from datetime import datetime
-from threading import Event
+from threading import Event, Thread
 
 from .config import Config
 from .errors import InternalError
+from .guide import guide_json, llms_txt
 from .utils import validate_port, get_timestamp
 
 
@@ -87,11 +90,92 @@ class APIHandler(BaseHTTPRequestHandler):
                 self._handle_status()
             elif self.path == '/api/health':
                 self._handle_health()
+            elif self.path == '/_health':
+                self._handle_liveness()
+            elif self.path == '/guide':
+                self._handle_guide()
+            elif self.path == '/llms.txt':
+                self._handle_llms()
             else:
                 self._send_error_response("Not found", 404)
         except Exception as e:
             self._send_error_response(f"Internal error: {str(e)}", 500)
     
+    def do_POST(self) -> None:
+        """Handle POST requests. Only /_shutdown (cli-daemon-spec §3)."""
+        try:
+            if self.path == '/_shutdown':
+                self._handle_shutdown()
+            else:
+                self._send_error_response("Not found", 404)
+        except Exception as e:
+            self._send_error_response(f"Internal error: {str(e)}", 500)
+
+    def _handle_liveness(self) -> None:
+        """GET /_health — open and cheap: liveness only, no dependency checks (§2)."""
+        self._send_json_response({
+            "ok": True,
+            "service": "boilerplate-cli-ui-python",
+            "pid": os.getpid(),
+            "port": self.server_status.port if self.server_status else None,
+        })
+
+    def _handle_shutdown(self) -> None:
+        """POST /_shutdown — answer before exiting, token-gated off-loopback (§3).
+
+        Bound off-loopback with no token this is a remote kill switch, so the
+        request is refused with 403 and the process keeps running.
+        """
+        if not self._shutdown_authorized():
+            self._send_json_response({
+                "ok": False,
+                "error": {
+                    "code": 90,
+                    "type": "forbidden",
+                    "message": "X-Shutdown-Token required when bound off-loopback",
+                    "recoverable": False,
+                },
+            }, 403)
+            return
+
+        self._send_json_response({"ok": True, "stopping": True})
+        try:
+            self.wfile.flush()
+        except Exception:
+            pass
+
+        # Exit from a separate thread so this response finishes first.
+        def _bye():
+            time.sleep(0.05)
+            try:
+                os.remove(os.environ.get('BOILERPLATE_PID_FILE',
+                                         '/tmp/boilerplate-cli-ui-python.pid'))
+            except OSError:
+                pass
+            os._exit(0)
+
+        Thread(target=_bye, daemon=True).start()
+
+    def _shutdown_authorized(self) -> bool:
+        host = getattr(self.server, 'bound_host', '127.0.0.1')
+        if host in ('127.0.0.1', 'localhost', '::1'):
+            return True
+        token = os.environ.get('SHUTDOWN_TOKEN', '')
+        return bool(token) and self.headers.get('X-Shutdown-Token') == token
+
+    def _handle_guide(self) -> None:
+        """GET /guide — the embedded guide over HTTP (cli-guide-spec §3)."""
+        self.send_response(200)
+        self.send_header('Content-Type', 'application/json')
+        self.end_headers()
+        self.wfile.write(guide_json().encode('utf-8'))
+
+    def _handle_llms(self) -> None:
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/plain; charset=utf-8')
+        self.end_headers()
+        self.wfile.write(llms_txt().encode('utf-8'))
+
     def _handle_root(self) -> None:
         """Handle root endpoint - API info."""
         data = {
@@ -192,6 +276,8 @@ class HTTPServerManager:
         # Create server
         try:
             self.server = HTTPServer((self.config.host, port), APIHandler)
+            # /_shutdown is token-gated whenever this is not loopback (§3).
+            self.server.bound_host = self.config.host
             logging.info(f"Server starting on http://{self.config.host}:{port}")
             logging.info(f"Press Ctrl+C to stop")
             
