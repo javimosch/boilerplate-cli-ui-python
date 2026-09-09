@@ -25,7 +25,7 @@ pyinstaller \
     --hidden-import=src \
     --strip \
     --noupx \
-    src/main.py
+    run.py
 
 # Move binary to project root
 echo "Moving binary to project root..."
